@@ -32,4 +32,4 @@ Also, prior to the initial running, create initial buy orders in Alpaca. then ru
 sqlUtils.addStock(ticker,qty) to match your alpaca account 
 
 ## Work Items
-This as an ongoing project. feel free to give suggestions/pull requests to help contribute 
+This as an ongoing project. feel free to give suggestions/pull requests to help contribute
