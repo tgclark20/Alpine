@@ -10,12 +10,12 @@ def make_celery(app, name):
         # Executes Sunday-Thursday Evening at 8:00 p.m.
         'run-algorithm': {
             'task': 'app.runAlgorithm',
-            'schedule': crontab(hour=00, minute=00, day_of_week="0-3"),
+            'schedule': crontab(hour=00, minute=00, day_of_week="1-5"),
         },
         # Executes Monday-Friday Evening at 8:00 a.m
         'post-transaction':{
             'task': 'app.postTransactions',
-            'schedule': crontab(hour=10, minute=00, day_of_week="1-4"),
+            'schedule': crontab(hour=10, minute=00, day_of_week="1-5"),
         },
     }
     class ContextTask(celery.Task):

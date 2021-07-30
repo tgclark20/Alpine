@@ -110,4 +110,4 @@ def updatePortfolio(port_id, qty):
     cursor.close()
     connection.close()
 
-
+cd

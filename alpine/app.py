@@ -95,14 +95,16 @@ def updateList(n):
 def runAlgorithm():
     if AlpacaUtils.isTomorrowOpen():
         stocks = sqlUtils.getPortfolio()
-        for stock in stocks:
+        print(stocks)
+        for index, stock in stocks.iterrows():
             # replace tradingAlgorithms method to run analysis using different approaches
-            stockAnalysis = movingAverage.maModel(stock[1])
-            if stockAnalysis == 2.0:
-                sqlUtils.createBuy(stock[1], 2)
-            elif stockAnalysis == -2.0:
-                sqlUtils.createSell(stock[1])
-
+            app.logger.info("analyzing " + stock['symbol'])
+            stockAnalysis = movingAverage.maModel(stock['symbol'])
+            app.logger.info(stockAnalysis)
+        if stockAnalysis == 2.0:
+            sqlUtils.createBuy(stock[1], 2)
+        elif stockAnalysis == -2.0:
+            sqlUtils.createSell(stock[1])
 
     string ="running algorithm"
     return string
