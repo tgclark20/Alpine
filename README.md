@@ -1,7 +1,7 @@
 # ALPINE
 Created By: Timothy Clark
 
-Version: 1.0.0
+Version: 1.0.1
 
 ## Overview
 Alpine is an open source tool-kit designed to utilize the Alpaca API in order to test, experiment, and 
