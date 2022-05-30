@@ -21,3 +21,4 @@ LOGO_PATH= "assets/Alpine_png_white-removebg-preview.png"
 # Contstants required for email functionality
 SENDER = ''
 RECIEVER = ''
+PSSWD =''

@@ -16,6 +16,7 @@ def sendEmail(stocks):
     
     sender = constants.SENDER
     receiver = constants.RECIEVER
+    psswd= constants.PSSWD
 
     # Create message container - the correct MIME type is multipart/alternative.
     msg = MIMEMultipart('alternative')
@@ -45,7 +46,7 @@ def sendEmail(stocks):
     # Send the message via local SMTP server.
     s = smtplib.SMTP('smtp.gmail.com', 587)
     s.starttls()
-    s.login(sender,"Spartanburg1!")
+    s.login(sender,psswd)
     # sendmail function takes 3 arguments: sender's address, recipient's address
     # and message to send - here it is sent as one string.
     s.sendmail(sender, receiver, msg.as_string())
