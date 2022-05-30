@@ -3,8 +3,8 @@
     File name: movingAverage.py
     Author: Timothy Clark
     Date created: 6/26/2021
-    Date last modified: 7/10/2021
-    Python Version: 3.8
+    Date last modified: 12/28/2021
+    Python Version: 3.9
 
     Description: accesses SQLite3 database to create a transaction object to be processed
 """
@@ -109,5 +109,4 @@ def updatePortfolio(port_id, qty):
     connection.commit()
     cursor.close()
     connection.close()
-
-
+    

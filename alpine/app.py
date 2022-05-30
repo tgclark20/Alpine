@@ -1,29 +1,64 @@
 
 import dash
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 import plotly.graph_objs as go
 import pandas as pd
-
 from dash.dependencies import Input, Output
-from celeryconfig import make_celery
 import AlpacaUtils
 import sqlUtils
 import constants
 import movingAverage
+import logging
+import emailGenerator as email
+from apscheduler.schedulers.background import BackgroundScheduler
+
+logging.basicConfig(filename='alpine.log', level=logging.INFO)
+logging.info('app started')
+def runAlgorithm():
+    if AlpacaUtils.isTomorrowOpen():
+        stocks = sqlUtils.getPortfolio()
+        logging.info(stocks)
+        analysis=[]
+        for index, stock in stocks.iterrows():
+            # replace tradingAlgorithms method to run analysis using different approaches
+            logging.info("analyzing " + stock['symbol'])
+            stockAnalysis = movingAverage.maModel(stock['symbol'])
+            logging.info(stockAnalysis)
+            analysis.append(stockAnalysis)
+        if stockAnalysis == 2.0:
+            sqlUtils.createBuy(stock[1], 2)
+        elif stockAnalysis == -2.0:
+            sqlUtils.createSell(stock[1])
+        stocks['analysis']=analysis
+        email.sendEmail(stocks)
+        logging.info("email sent")
+        
+        
+def postTransactions():
+    if AlpacaUtils.isTodayOpen():
+        transactions = sqlUtils.getTransactions()
+        logging.info(transactions)
+        for trans in transactions:
+            AlpacaUtils.createTransaction(trans[1], trans[2], trans[3], trans[4], trans[5])
+            sqlUtils.deleteTransaction(trans[0])
+            sqlUtils.updatePortfolio(trans[6],trans[3])
+
+    
+scheduler = BackgroundScheduler()
+scheduler.add_job(runAlgorithm, 'cron', minute='50', hour='01', day_of_week='sun,mon,tue,wed,thu,fri', month ='*', year='*', timezone='utc')
+scheduler.add_job(postTransactions, 'cron', minute='55', hour='01', day_of_week='mon-fri', month ='*', year='*', timezone='utc')
+scheduler.start()
 
 # intialize
 app = dash.Dash(__name__,
 external_stylesheets =[dbc.themes.DARKLY])
 # define
-app.config.update(CELERY_BROKER_URL=constants.CELERY_BROKER_URL,
-                CELERY_RESULT_BACKEND=constants.CELERY_RESULT_BACKEND)
 app.config.update(result_expires=3600,
                 enable_utc = True,
                 timezone = 'UTC')
 
-celery = make_celery(app, __name__)
 app.layout = html.Div([
     html.Div([
         html.Img(src="/assets/Alpine 2.png", style={'height':'10%', 'width':'10%'}),
@@ -91,34 +126,7 @@ def updateList(n):
 
     return table
 
-@celery.task(name='app.runAlgorithm')
-def runAlgorithm():
-    if AlpacaUtils.isTomorrowOpen():
-        stocks = sqlUtils.getPortfolio()
-        print(stocks)
-        for index, stock in stocks.iterrows():
-            # replace tradingAlgorithms method to run analysis using different approaches
-            app.logger.info("analyzing " + stock['symbol'])
-            stockAnalysis = movingAverage.maModel(stock['symbol'])
-            app.logger.info(stockAnalysis)
-        if stockAnalysis == 2.0:
-            sqlUtils.createBuy(stock[1], 2)
-        elif stockAnalysis == -2.0:
-            sqlUtils.createSell(stock[1])
 
-    string ="running algorithm"
-    return string
-
-@celery.task(name='app.postTransactions')
-def postTransactions():
-    if AlpacaUtils.isTodayOpen():
-        transactions = sqlUtils.getTransactions()
-        for trans in transactions:
-            AlpacaUtils.createTransaction(trans[1], trans[2], trans[3], trans[4], trans[5])
-            sqlUtils.deleteTransaction(trans[0])
-            sqlUtils.updatePortfolio(trans[6])
-    string ="posting transaction"
-    return string
 # run
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, use_reloader=False)
