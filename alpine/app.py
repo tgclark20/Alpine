@@ -11,7 +11,6 @@ import sqlUtils
 import constants
 import movingAverage
 import logging
-import emailGenerator as email
 from apscheduler.schedulers.background import BackgroundScheduler
 
 logging.basicConfig(filename='alpine.log', level=logging.INFO)
@@ -32,8 +31,6 @@ def runAlgorithm():
         elif stockAnalysis == -2.0:
             sqlUtils.createSell(stock[1])
         stocks['analysis']=analysis
-        email.sendEmail(stocks)
-        logging.info("email sent")
         
         
 def postTransactions():
@@ -47,8 +44,8 @@ def postTransactions():
 
     
 scheduler = BackgroundScheduler()
-scheduler.add_job(runAlgorithm, 'cron', minute='50', hour='01', day_of_week='sun,mon,tue,wed,thu,fri', month ='*', year='*', timezone='utc')
-scheduler.add_job(postTransactions, 'cron', minute='55', hour='01', day_of_week='mon-fri', month ='*', year='*', timezone='utc')
+scheduler.add_job(runAlgorithm, 'cron', minute='30', hour='09', day_of_week='mon-fri', month ='*', year='*', timezone='utc')
+scheduler.add_job(postTransactions, 'cron', minute='00', hour='10', day_of_week='mon-fri', month ='*', year='*', timezone='utc')
 scheduler.start()
 
 # intialize
@@ -110,17 +107,6 @@ def updateGraph(n):
               Input('transactionInterval','n_intervals'))
 def updateList(n):
     transactionTable = sqlUtils.getTransactions().drop(columns=['trans_id', 'type', 'time_in_force'])
-    # transactionTable = pd.DataFrame(
-    # {
-    #     "symbol": ["Arthur", "Ford", "Zaphod", "Trillian"],
-    #     "type": ["buy", "sell", "buy", "buy"],
-    # })
-    # for index, row in transactionTable.iterrows():
-    #     if row['type'] == 'buy':
-    #         row['type'] = '<i class="bi bi-caret-up-fill"></i>'
-    #     elif row['type'] =='sell':
-    #         row['type'] = '<i class="bi bi-caret-up-fill"></i>'
-
     table = dbc.Table.from_dataframe(transactionTable,striped=False, bordered=True, hover=True)
 
 

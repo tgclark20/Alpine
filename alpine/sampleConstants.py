@@ -17,8 +17,3 @@ MARKET = 'https://paper-api.alpaca.markets'
 SQL_DB_NAME = os.getcwd()+"\\transactions.db"
 
 LOGO_PATH= "assets/Alpine_png_white-removebg-preview.png"
-
-# Contstants required for email functionality
-SENDER = ''
-RECIEVER = ''
-PSSWD =''
