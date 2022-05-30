@@ -37,10 +37,11 @@ def postTransactions():
     if AlpacaUtils.isTodayOpen():
         transactions = sqlUtils.getTransactions()
         logging.info(transactions)
-        for trans in transactions:
-            AlpacaUtils.createTransaction(trans[1], trans[2], trans[3], trans[4], trans[5])
-            sqlUtils.deleteTransaction(trans[0])
-            sqlUtils.updatePortfolio(trans[6],trans[3])
+        if transactions:
+            for trans in transactions:
+                AlpacaUtils.createTransaction(trans[1], trans[2], trans[3], trans[4], trans[5])
+                sqlUtils.deleteTransaction(trans[0])
+                sqlUtils.updatePortfolio(trans[6],trans[3])
 
     
 scheduler = BackgroundScheduler()
