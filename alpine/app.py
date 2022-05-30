@@ -45,7 +45,7 @@ def postTransactions():
 
     
 scheduler = BackgroundScheduler()
-scheduler.add_job(runAlgorithm, 'cron', minute='30', hour='09', day_of_week='mon-fri', month ='*', year='*', timezone='utc')
+scheduler.add_job(runAlgorithm, 'cron', minute='30', hour='00', day_of_week='*', month ='*', year='*', timezone='utc')
 scheduler.add_job(postTransactions, 'cron', minute='00', hour='10', day_of_week='mon-fri', month ='*', year='*', timezone='utc')
 scheduler.start()
 
