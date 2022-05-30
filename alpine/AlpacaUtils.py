@@ -47,7 +47,7 @@ def createTransaction(symbol, qty, side, type, tif):
     api.submit_order(symbol,qty,side,type,tif)
 
 def getHistory():
-    history= api.get_portfolio_history(period='1W', timeframe=TimeFrame.Hour).df
+    history= api.get_portfolio_history(period='1W', timeframe='1H').df
     return history.drop(columns=['profit_loss', 'profit_loss_pct'])
 
 def getEquity():
