@@ -10,6 +10,10 @@ implement basic algorithmic trading models. training models can be added to repl
 *Disclaimer: This application, and the models included are not to be considered financial advice. this application is 
 purely for educational and experimental purposes only*
 
+**1.2.0 Changelog:** 
+- Replaced Celery with APScheduler for scheduling tasks 
+- Updated calls to Alpaca to use API V2 
+
 ## Requirements
 
 An active Alpaca account is also required. It is reccomended to start with a paper trading account to ensure no accidental losses during setup.
