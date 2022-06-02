@@ -37,7 +37,7 @@ def postTransactions():
     if AlpacaUtils.isTodayOpen():
         transactions = sqlUtils.getTransactions()
         logging.info(transactions)
-        if transactions:
+        if not transactions.empty:
             for trans in transactions:
                 AlpacaUtils.createTransaction(trans[1], trans[2], trans[3], trans[4], trans[5])
                 sqlUtils.deleteTransaction(trans[0])
