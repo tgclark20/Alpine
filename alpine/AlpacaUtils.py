@@ -56,3 +56,27 @@ def getEquity():
     equity = account.equity
 
     return "$"+str(equity)
+
+def getWatchlist():
+    watchlist = api.get_watchlist(constants.WATCHLIST_ID)
+    stocks=[]
+    for company in watchlist.assets:
+        stocks.append(company['symbol'])
+    
+    stockString = ','.join(stocks)
+
+    return stockString
+
+def getStockNews(stocks):
+    startDate = datetime.datetime.now()- datetime.timedelta(days=2)
+    startDate = startDate.strftime("%Y-%m-%dT%H:%M:%SZ")
+    news =api.get_news(symbol=stocks,start=startDate, limit=25, include_content= True, exclude_contentless=True)
+
+    return news
+
+
+
+
+
+
+
