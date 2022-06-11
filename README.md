@@ -1,7 +1,7 @@
 # ALPINE
 Created By: Timothy Clark
 
-Version: 1.0.1
+Version: 1.2.0
 
 ## Overview
 Alpine is an open source tool-kit designed to utilize the Alpaca API in order to test, experiment, and 
@@ -10,20 +10,13 @@ implement basic algorithmic trading models. training models can be added to repl
 *Disclaimer: This application, and the models included are not to be considered financial advice. this application is 
 purely for educational and experimental purposes only*
 
+**1.2.0 Changelog:** 
+- Replaced Celery with APScheduler for scheduling tasks 
+- Updated calls to Alpaca to use API V2 
+
 ## Requirements
-Along with the python packages listed in the requirements.txt file, an instance of redis needs to be running as well as
-a running celery beat and worker.
 
-An active Alpaca account is also required. It is reccomended to start with a paper trading account to ensure no 
-accidental losses during setup.
-
-### Redis:
-for more info on installing and running Redis, visit https://redis.io/download 
-
-### Celery:
-with celery installed. in your terminal run the following command in an active terminal
-
-*celery -A proj_name worker -l info -B*
+An active Alpaca account is also required. It is reccomended to start with a paper trading account to ensure no accidental losses during setup.
 
 ## Setup
 once all requirements are met, ensure all configurations are set in *constants.py*

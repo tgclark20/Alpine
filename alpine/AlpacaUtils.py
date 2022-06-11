@@ -2,8 +2,8 @@
     File name: main.py
     Author: Timothy Clark
     Date created: 6/27/2021
-    Date last modified: 6/27/2021
-    Python Version: 3.8
+    Date last modified: 05/29/2022
+    Python Version: 3.9
 
     Description: this file contains all utility methods used when connecting to the Alpaca API
 """
@@ -21,7 +21,7 @@ api = tradeapi.REST(
 
 def isTomorrowOpen():
     result = False
-    date = datetime.datetime.now() + datetime.timedelta(1)
+    date = datetime.datetime.now() + datetime.timedelta(days=1)
     tomorrow = date.strftime("%Y-%m-%d %H:%M:%S")
     calendar = api.get_calendar(tomorrow,tomorrow)[0]
 
@@ -47,7 +47,7 @@ def createTransaction(symbol, qty, side, type, tif):
     api.submit_order(symbol,qty,side,type,tif)
 
 def getHistory():
-    history= api.get_portfolio_history(period='1W', timeframe='1H',).df
+    history= api.get_portfolio_history(period='1W', timeframe='1H').df
     return history.drop(columns=['profit_loss', 'profit_loss_pct'])
 
 def getEquity():

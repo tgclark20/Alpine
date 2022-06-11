@@ -1,2 +1,4 @@
 /alpine/constants.py
 /alpine/transactions.db
+/alpine/alpine.log
+/alpine/nohup.out
