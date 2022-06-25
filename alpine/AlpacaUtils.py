@@ -44,7 +44,7 @@ def isTodayOpen():
     return result
 
 def createTransaction(symbol, qty, side, type, tif):
-    api.submit_order(symbol,qty,side,type,tif)
+    api.submit_order(symbol=symbol,qty=qty,side=side,type=type,time_in_force=tif)
 
 def getHistory():
     history= api.get_portfolio_history(period='1W', timeframe='1H').df
