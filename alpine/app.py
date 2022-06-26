@@ -29,8 +29,11 @@ def runAlgorithm():
         if stockAnalysis == 2.0:
             sqlUtils.createBuy(stock[1], 2)
         elif stockAnalysis == -2.0:
-            sqlUtils.createSell(stock[1])
-        stocks['analysis']=analysis
+            if stock['qty']>0:
+                sqlUtils.createSell(stock[1])
+            else:
+                logging.info('No asset available    Sell voided')
+        
         
         
 def postTransactions():
@@ -38,7 +41,8 @@ def postTransactions():
         transactions = sqlUtils.getTransactions()
         logging.info(transactions)
         if not transactions.empty:
-            for trans in transactions:
+            for index, trans in transactions.iterrows():
+                logging.info('Creating '+ trans[2] + ' transaction for '+ trans[1])
                 AlpacaUtils.createTransaction(trans[1], trans[3], trans[2], trans[4], trans[5])
                 sqlUtils.deleteTransaction(trans[0])
                 sqlUtils.updatePortfolio(trans[6],trans[3])
