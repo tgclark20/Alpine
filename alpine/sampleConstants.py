@@ -14,7 +14,7 @@ API_SECRET_KEY = ""
 MARKET = 'https://paper-api.alpaca.markets'
 
 # SQLite connection Constants
-SQL_DB_NAME = os.getcwd()+"\\transactions.db"
+SQL_DB_NAME = os.getcwd()+"\\alpine\\assets\\transactions.db"
 
 LOGO_PATH= "assets/Alpine_png_white-removebg-preview.png"
 WATCHLIST_ID=""
