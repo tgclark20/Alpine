@@ -2,3 +2,6 @@
 /alpine/transactions.db
 /alpine/alpine.log
 /alpine/nohup.out
+/alpine/assets/all-data.csv
+/alpine/assets/naivebayes.pickle
+/alpine/sandbox.py

@@ -44,7 +44,7 @@ def isTodayOpen():
     return result
 
 def createTransaction(symbol, qty, side, type, tif):
-    api.submit_order(symbol,qty,side,type,tif)
+    api.submit_order(symbol=symbol,qty=qty,side=side,type=type,time_in_force=tif)
 
 def getHistory():
     history= api.get_portfolio_history(period='1W', timeframe='1H').df
@@ -56,3 +56,27 @@ def getEquity():
     equity = account.equity
 
     return "$"+str(equity)
+
+def getWatchlist():
+    watchlist = api.get_watchlist(constants.WATCHLIST_ID)
+    stocks=[]
+    for company in watchlist.assets:
+        stocks.append(company['symbol'])
+    
+    stockString = ','.join(stocks)
+
+    return stockString
+
+def getStockNews(stocks):
+    startDate = datetime.datetime.now()- datetime.timedelta(days=2)
+    startDate = startDate.strftime("%Y-%m-%dT%H:%M:%SZ")
+    news =api.get_news(symbol=stocks,start=startDate, limit=25, include_content= True, exclude_contentless=True)
+
+    return news
+
+
+
+
+
+
+

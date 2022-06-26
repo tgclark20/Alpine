@@ -39,7 +39,7 @@ def postTransactions():
         logging.info(transactions)
         if not transactions.empty:
             for trans in transactions:
-                AlpacaUtils.createTransaction(trans[1], trans[2], trans[3], trans[4], trans[5])
+                AlpacaUtils.createTransaction(trans[1], trans[3], trans[2], trans[4], trans[5])
                 sqlUtils.deleteTransaction(trans[0])
                 sqlUtils.updatePortfolio(trans[6],trans[3])
 

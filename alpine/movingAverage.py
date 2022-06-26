@@ -16,7 +16,7 @@ import constants
 import datetime
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 pd.options.mode.chained_assignment = None  # default='warn'
 
@@ -76,7 +76,7 @@ def maChannelModel(ticker):
     tickerdata['transactionFlag'] = tickerdata.signal.diff()
     
     print(tickerdata['return'])
-    maPlot(tickerdata)
+    # maPlot(tickerdata)
     
     return tickerdata.loc[tickerdata.index[-1],'transactionFlag']
 
@@ -86,25 +86,25 @@ def maChannelModel(ticker):
 # are strictly for testing and research purposes  #
 ###################################################
 
-def maPlot(gld):
-    plt.rcParams['figure.figsize'] = 12, 6
-    plt.grid(True, alpha = .3)
-    plt.plot(gld.iloc[-208:]['close'], label = 'GLD')
-    plt.plot(gld.iloc[-208:]['short-term'], label = 'short-term')
-    plt.plot(gld.iloc[-208:]['long-term'], label = 'long-term')
-    plt.plot(gld[-208:].loc[gld.transactionFlag == 2].index, gld[-208:]['short-term'][gld.transactionFlag == 2], '^',
-           color = 'g', markersize = 12)
-    plt.plot(gld[-208:].loc[gld.transactionFlag == -2].index, gld[-208:]['long-term'][gld.transactionFlag == -2], 'v',
-            color = 'r', markersize = 12)
-    plt.legend(loc=2)
-    plt.show()
+# def maPlot(gld):
+#     plt.rcParams['figure.figsize'] = 12, 6
+#     plt.grid(True, alpha = .3)
+#     plt.plot(gld.iloc[-208:]['close'], label = 'GLD')
+#     plt.plot(gld.iloc[-208:]['short-term'], label = 'short-term')
+#     plt.plot(gld.iloc[-208:]['long-term'], label = 'long-term')
+#     plt.plot(gld[-208:].loc[gld.transactionFlag == 2].index, gld[-208:]['short-term'][gld.transactionFlag == 2], '^',
+#            color = 'g', markersize = 12)
+#     plt.plot(gld[-208:].loc[gld.transactionFlag == -2].index, gld[-208:]['long-term'][gld.transactionFlag == -2], 'v',
+#             color = 'r', markersize = 12)
+#     plt.legend(loc=2)
+#     plt.show()
 
-def maPerformance(gld):
-    plt.plot(np.exp(gld['return']).cumprod(), label='Buy/Hold')
-    plt.plot(np.exp(gld['system_return']).cumprod(), label='System')
-    plt.legend(loc=2)
-    plt.grid(True, alpha=.3)
-    plt.show()
+# def maPerformance(gld):
+#     plt.plot(np.exp(gld['return']).cumprod(), label='Buy/Hold')
+#     plt.plot(np.exp(gld['system_return']).cumprod(), label='System')
+#     plt.legend(loc=2)
+#     plt.grid(True, alpha=.3)
+#     plt.show()
     
 
 
