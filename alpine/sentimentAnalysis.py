@@ -39,7 +39,7 @@ def trainmodel():
 
     model.show_most_informative_features()
 
-    save_classifier = open("naivebayes.pickle","wb")
+    save_classifier = open(constants.MODEL_PATH,"wb")
     pickle.dump(model, save_classifier)
     save_classifier.close()
 
