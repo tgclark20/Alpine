@@ -1,7 +1,7 @@
 # ALPINE
 Created By: Timothy Clark
 
-Version: 1.2.0
+Version: 1.3.0
 
 ## Overview
 Alpine is an open source tool-kit designed to utilize the Alpaca API in order to test, experiment, and 
@@ -10,9 +10,10 @@ implement basic algorithmic trading models. training models can be added to repl
 *Disclaimer: This application, and the models included are not to be considered financial advice. this application is 
 purely for educational and experimental purposes only*
 
-**1.2.0 Changelog:** 
+**1.3.0 Changelog:** 
 - Replaced Celery with APScheduler for scheduling tasks 
 - Updated calls to Alpaca to use API V2 
+- Updated requirements documentation (removing redis and celery dependencies)
 
 ## Requirements
 
